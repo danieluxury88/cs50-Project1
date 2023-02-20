@@ -10,11 +10,8 @@ def index(request):
 
 def page(request, page):
     content = util.get_entry(page)
-    if (content == None):
-        print ("error")
-    else:
-        return render(request, "encyclopedia/wiki_page.html", {
+    return render(request, "encyclopedia/wiki_page.html", {
             "page":page,
             "content": content
-        })
+    })
 
