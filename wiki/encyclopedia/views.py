@@ -1,5 +1,5 @@
-from django.shortcuts import render
 from django.contrib import messages
+from django.shortcuts import render
 
 from . import util
 
@@ -35,6 +35,7 @@ def search(request):
             "similar_entries": similar_entries
         })
 
+
 def new_page(request):
     if request.method == "GET":
         return render(request, "encyclopedia/new_page.html")
@@ -46,3 +47,23 @@ def new_page(request):
         else:
             messages.warning(request, 'Entry already exists')
             return render(request, "encyclopedia/new_page.html")
+
+
+def edit_page(request):
+    if request.method == "POST":
+        page = request.POST['page']
+        content = request.POST['content']
+        md_content = util.convert_html_to_md(content).lstrip()
+        return render(request, "encyclopedia/edit_page.html", {
+            "page": page,
+            "content": md_content,
+        })
+
+
+def save_page(request):
+    if request.method == "POST":
+        title = request.POST['title']
+        content = request.POST['content']
+        html_content = util.convert_md_to_html(content)
+        util.edit_entry(title, html_content)
+        return page(request, title)

@@ -8,6 +8,12 @@
     {% if content == None %}
         <h1>{{ page }} Not Found</h1>
     {% else %}
-        {{ content|safe }}
+        {{content|safe}}
+        <form action="{% url 'edit_page' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="page" value=" {{ page }}">
+            <input type="hidden" name="content" value=" {{ content }}">
+            <input type="submit" value="Edit" >
+        </form>
     {% endif %}
 {% endblock %}

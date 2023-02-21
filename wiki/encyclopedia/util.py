@@ -1,5 +1,9 @@
 import re
 import markdown2
+import html2text
+
+
+
 
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
@@ -27,6 +31,17 @@ def save_entry(title, content):
     default_storage.save(filename, ContentFile(include_title))
 
 
+def edit_entry(title, content):
+    """
+    Edits an encyclopedia entry, given its title and Markdown
+    content.
+    """
+    filename = f"entries/{title}.md"
+    if default_storage.exists(filename):
+        default_storage.delete(filename)
+    default_storage.save(filename, ContentFile(content))
+
+
 def get_entry(title):
     """
     Retrieves an encyclopedia entry by its title. If no such
@@ -41,3 +56,8 @@ def get_entry(title):
 
 def convert_md_to_html(content):
     return markdown2.markdown(content)
+
+
+def convert_html_to_md(content):
+    escaped_html = markdown2.markdown(content, extras=['safe-mode'])
+    return html2text.html2text(escaped_html).strip()
