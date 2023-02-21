@@ -8,10 +8,13 @@ def index(request):
         "entries": util.list_entries()
     })
 
-def page(request, page):
-    content = util.get_entry(page)
+
+def page(request, item):
+    content = util.get_entry(item)
+    if (content != None):
+        content = util.convert_md_to_html(content)
     return render(request, "encyclopedia/wiki_page.html", {
-            "page":page,
-            "content": content
+        "page": item,
+        "content": content
     })
 

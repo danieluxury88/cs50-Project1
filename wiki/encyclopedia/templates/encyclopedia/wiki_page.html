@@ -8,7 +8,6 @@
     {% if content == None %}
         <h1>{{ page }} Not Found</h1>
     {% else %}
-        <h1>{{ page }}</h1>
-        <p>{{ content }}</p>
+        {{ content|safe }}
     {% endif %}
 {% endblock %}
