@@ -1,6 +1,7 @@
 import re
 import markdown2
 import html2text
+import random
 
 
 
@@ -52,6 +53,13 @@ def get_entry(title):
         return f.read().decode("utf-8")
     except FileNotFoundError:
         return None
+
+
+def get_random_entry():
+    """
+    Returns a random entry from list_entries
+    """
+    return random.choice(list_entries())
 
 
 def convert_md_to_html(content):

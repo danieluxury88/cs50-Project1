@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.shortcuts import render
 
+
 from . import util
 
 
@@ -18,6 +19,11 @@ def page(request, item):
         "page": item,
         "content": content
     })
+
+
+def random_page(request):
+    item = util.get_random_entry()
+    return page(request, item)
 
 
 def search(request):
