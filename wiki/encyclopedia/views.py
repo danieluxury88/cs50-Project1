@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib import messages
 
 from . import util
 
@@ -33,3 +34,15 @@ def search(request):
         return render(request, "encyclopedia/search_page.html", {
             "similar_entries": similar_entries
         })
+
+def new_page(request):
+    if request.method == "GET":
+        return render(request, "encyclopedia/new_page.html")
+    else:
+        title = request.POST['title']
+        if (util.get_entry(title) is None):
+            util.save_entry(title, request.POST['content'])
+            return page(request, title)
+        else:
+            messages.warning(request, 'Entry already exists')
+            return render(request, "encyclopedia/new_page.html")

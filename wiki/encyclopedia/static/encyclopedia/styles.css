@@ -36,3 +36,13 @@ textarea {
 .sidebar h2 {
     margin-top: 5px;
 }
+
+ul.new_page_form li  {
+  list-style-type: none;
+  margin-bottom: 10px;
+}
+
+ul.new_page_form  {
+  margin: 10px;
+  padding: 10px;
+}
