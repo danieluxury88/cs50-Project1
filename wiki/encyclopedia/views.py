@@ -18,3 +18,18 @@ def page(request, item):
         "content": content
     })
 
+
+def search(request):
+    page_search = request.POST['q']
+    page_search_content = util.get_entry(page_search)
+    if (page_search_content != None):
+        return page(request, page_search)
+    else:
+        similar_entries = []
+        entry_list = util.list_entries()
+        for entry in entry_list:
+            if page_search.lower() in entry.lower():
+                similar_entries.append(entry)
+        return render(request, "encyclopedia/search_page.html", {
+            "similar_entries": similar_entries
+        })
